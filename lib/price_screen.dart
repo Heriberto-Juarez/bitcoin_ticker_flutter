@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/coin_data.dart';
 
@@ -10,11 +11,11 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
 
-  String selectedCurrency = 'USD';
-  List<DropdownMenuItem<String>> getDropdownItems() {
-    List<DropdownMenuItem<String>> currenciesWidgets = [];
+  int selectedCurrency = 0;
+  List<Widget> getDropdownItems() {
+    List<Widget> currenciesWidgets = [];
     for (var currency in currenciesList){
-      currenciesWidgets.add(DropdownMenuItem(child: Text(currency), value: currency,));
+      currenciesWidgets.add(Text(currency));
     }
     return currenciesWidgets;
   }
@@ -58,12 +59,9 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: DropdownButton(items: items, onChanged: (value) {
-              setState(() {
-                selectedCurrency = value.toString();
-              });
-            }, value: selectedCurrency),
-          ),
+            child: CupertinoPicker(backgroundColor: Colors.lightBlue,children: items, itemExtent: 32.0, onSelectedItemChanged: (selectedIndex){
+              print(selectedIndex);
+            })),
         ],
       ),
     );
