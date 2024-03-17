@@ -32,13 +32,4 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
-
-  getListWidgets(){
-    List<DropdownMenuItem<String>> currenciesWidgets = [];
-    for(var currency in currenciesList){
-      currenciesWidgets.add(DropdownMenuItem(child: Text(currency), value: currency,));
-    }
-    return currenciesWidgets;
-  }
-
 }

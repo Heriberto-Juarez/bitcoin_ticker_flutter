@@ -11,11 +11,19 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
 
   String selectedCurrency = 'USD';
-
-  CoinData coinData = CoinData();
+  List<DropdownMenuItem<String>> getDropdownItems() {
+    List<DropdownMenuItem<String>> currenciesWidgets = [];
+    for (var currency in currenciesList){
+      currenciesWidgets.add(DropdownMenuItem(child: Text(currency), value: currency,));
+    }
+    return currenciesWidgets;
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    var items = getDropdownItems();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('🤑 Coin Ticker'),
@@ -50,7 +58,7 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: DropdownButton(items: coinData.getListWidgets(), onChanged: (value) {
+            child: DropdownButton(items: items, onChanged: (value) {
               setState(() {
                 selectedCurrency = value.toString();
               });
