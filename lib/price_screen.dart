@@ -1,29 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/coin_data.dart';
+import 'dart:io' show Platform;
 
 class PriceScreen extends StatefulWidget {
-
-
   @override
   _PriceScreenState createState() => _PriceScreenState();
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-
   int selectedCurrency = 0;
-  List<Widget> getDropdownItems() {
+  String selectedCurrencyAndroid = 'USD';
+
+  Widget iosPicker() {
     List<Widget> currenciesWidgets = [];
-    for (var currency in currenciesList){
+    for (var currency in currenciesList) {
       currenciesWidgets.add(Text(currency));
     }
-    return currenciesWidgets;
+    return CupertinoPicker(
+        backgroundColor: Colors.lightBlue,
+        children: currenciesWidgets,
+        itemExtent: 32.0,
+        onSelectedItemChanged: (selectedIndex) {
+          print(selectedIndex);
+        });
   }
+
+  Widget androidPicker() {
+    List<DropdownMenuItem<String>> currenciesWidgets = [];
+    for(var currency in currenciesList){
+      currenciesWidgets.add(DropdownMenuItem(child: Text(currency), value: currency,));
+    }
+    return DropdownButton(items: currenciesWidgets, onChanged: (value) {
+      setState(() {
+        selectedCurrencyAndroid = value.toString();
+      });
+    }, value: selectedCurrencyAndroid);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
-    var items = getDropdownItems();
+    var items = iosPicker();
 
     return Scaffold(
       appBar: AppBar(
@@ -59,9 +77,8 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: CupertinoPicker(backgroundColor: Colors.lightBlue,children: items, itemExtent: 32.0, onSelectedItemChanged: (selectedIndex){
-              print(selectedIndex);
-            })),
+            child: Platform.isIOS ? iosPicker() : androidPicker(),
+          ),
         ],
       ),
     );
