@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 const List<String> currenciesList = [
   'AUD',
   'BRL',
@@ -28,4 +31,14 @@ const List<String> cryptoList = [
   'LTC',
 ];
 
-class CoinData {}
+class CoinData {
+
+  getListWidgets(){
+    List<DropdownMenuItem<String>> currenciesWidgets = [];
+    for(var currency in currenciesList){
+      currenciesWidgets.add(DropdownMenuItem(child: Text(currency), value: currency,));
+    }
+    return currenciesWidgets;
+  }
+
+}
